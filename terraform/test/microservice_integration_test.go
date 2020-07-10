@@ -8,7 +8,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestPoliciesValidity(t *testing.T) {
+func TestMicroserviceValidity(t *testing.T) {
 	t.Parallel()
 
 	workDir := ".."
@@ -30,7 +30,7 @@ func TestPoliciesValidity(t *testing.T) {
 		NoColor: true,
 	}
 
-	//t.Logf("Running in %s", workDir)
+	t.Logf("Running in %s", workDir)
 
 	//defer terraform.Destroy(t, terratestOptions)
 	terraform.InitAndPlan(t, terratestOptions)
