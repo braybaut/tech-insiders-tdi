@@ -32,6 +32,6 @@ func TestPoliciesValidity(t *testing.T) {
 
 	t.Logf("Running in %s", workDir)
 
-	defer terraform.Destroy(t, terratestOptions)
+	//defer terraform.Destroy(t, terratestOptions)
 	terraform.InitAndPlan(t, terratestOptions)
 }
