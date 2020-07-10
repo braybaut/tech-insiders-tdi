@@ -20,6 +20,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach" {
-  role       = "${aws_iam_role.backend_role.name}"
+  role       = aws_iam_role.backend_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
