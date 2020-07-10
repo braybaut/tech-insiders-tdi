@@ -30,8 +30,6 @@ func TestMicroserviceValidity(t *testing.T) {
 		NoColor: true,
 	}
 
-	t.Logf("Running in %s", workDir)
-
 	//defer terraform.Destroy(t, terratestOptions)
 	terraform.InitAndPlan(t, terratestOptions)
 }
