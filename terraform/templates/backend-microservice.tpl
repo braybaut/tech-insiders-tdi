@@ -1,7 +1,7 @@
 [
     {
       "name": "microservice",
-      "image": app_image,
+      "image": "${app_image}",
       "entryPoint": [],
       "environment": [],
       "portMappings": [
