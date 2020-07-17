@@ -20,5 +20,10 @@ jobs:
         run: go test -v -tags=integration
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}  
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
           AWS_REGION: us-east-1
+      - name: deploy infra
+        run: terraform apply
+      - name: build and push app and image
+        run: docker build....; docker push
+      - name: E2E test
