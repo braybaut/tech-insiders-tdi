@@ -10,8 +10,33 @@ import (
 	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/retry"
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"github.com/stretchr/testify/assert"
 )
+
+const AlbOutput = "alb_dns_name"
+
+func TestHttpMicroserviceValidity(t *testing.T) {
+	t.Parallel()
+
+	workDir := ".."
+
+	terratestOptions := &terraform.Options{
+		TerraformDir: workDir,
+		NoColor:      true,
+	}
+
+	test_structure.SaveTerraformOptions(t, workDir, terratestOptions)
+
+	// Run HTTP tests
+	test_structure.RunTestStage(t, "microservice_tests", func() {
+		terratestOptions := test_structure.LoadTerraformOptions(t, workDir)
+		websiteEndpoint := terraform.OutputRequired(t, terratestOptions, AlbOutput)
+
+		testURL(t, websiteEndpoint, "", 200, "Welcome to tech insiders")
+	})
+}
 
 func testURL(t *testing.T, endpoint string, path string, expectedStatus int, expectedBody string) {
 	url := fmt.Sprintf("%s://%s/%s", "http", endpoint, path)
