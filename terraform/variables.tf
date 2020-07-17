@@ -2,6 +2,10 @@ variable region {
   default = "us-east-1"
 }
 
+variable "tags" {
+  type = string
+}
+
 
 variable "vpc_cidr" {
   description = "CIDR for VPC"

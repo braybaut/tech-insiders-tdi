@@ -13,7 +13,7 @@ data "template_file" "microservice" {
   template = "${file("templates/backend-microservice.tpl")}"
 
   vars = {
-    app_image = "${aws_ecr_repository.microservice.repository_url}:latest"
+    app_image = "${aws_ecr_repository.microservice.repository_url}:${var.tags}"
   }
 }
 
