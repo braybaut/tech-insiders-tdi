@@ -15,15 +15,31 @@ jobs:
       - name: Download Go Modules
         working-directory: terraform/test
         run: go mod download
-      - name: Run Go Tests
+      - name: Run Go Static Tests
+        working-directory: terraform/test
+        run: go test -v -tags=static
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_REGION: us-east-1
+      - name: Deploy Infrastructure
+        working-directory: terraform
+        run: terraform apply -lock=false "microservice-terraform.tfplan" -no-color 
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_REGION: us-east-1
+      - uses: Terranovax/aws-ecr-deploy@v1
+        with:
+          access_key_id: ${{ secrets.aws_access_key_id }}
+          secret_access_key: ${{ secrets.aws_secret_access_key }}
+          account_id: ${{ secrets.account_id }}
+          region: us-east-1
+          repo: tech-insiders-microservice
+      - name: Run Go Integration Tests
         working-directory: terraform/test
         run: go test -v -tags=integration
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
           AWS_REGION: us-east-1
-      - name: deploy infra
-        run: terraform apply
-      - name: build and push app and image
-        run: docker build....; docker push
-      - name: E2E test
