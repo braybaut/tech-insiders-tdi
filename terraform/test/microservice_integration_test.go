@@ -29,6 +29,8 @@ func TestHttpMicroserviceValidity(t *testing.T) {
 
 	test_structure.SaveTerraformOptions(t, workDir, terratestOptions)
 
+	time.Sleep(140000 * time.Millisecond) // Wait until ECS task is updated
+
 	// Run HTTP tests
 	test_structure.RunTestStage(t, "microservice_tests", func() {
 		terratestOptions := test_structure.LoadTerraformOptions(t, workDir)
