@@ -7,7 +7,7 @@ import (
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "This test will fail")
+	fmt.Fprintf(w, "This test will fail too")
 	fmt.Println("Endpoint Hit: homePage")
 }
 
