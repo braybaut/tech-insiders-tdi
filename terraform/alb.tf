@@ -22,5 +22,16 @@ resource "aws_lb_target_group" "tgtech" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.tech.id
   target_type = "ip"
+
+  health_check {
+    enabled = true 
+    interval = 5 
+    path = "/"
+    port = "traffic-port"
+    protocol = "HTTP" 
+    timeout = 2 
+    healthy_threshold = 2
+    unhealthy_threshold = 2 
+  }
 }
 
