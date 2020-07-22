@@ -38,7 +38,9 @@ jobs:
           AWS_REGION: us-east-1
       - name: Deploy Infrastructure
         working-directory: terraform
-        run: terraform apply -lock=false "microservice-terraform.tfplan" -no-color 
+        run: |
+          terraform apply -lock=false "microservice-terraform.tfplan" -no-color 
+          terraform destroy -lock=false "microservice-terraform.tfplan" -no-color
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
